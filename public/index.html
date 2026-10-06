@@ -54,7 +54,39 @@
       font-size: clamp(1.4rem, 3.5vw, 2rem);
       margin: 0;
     }
-    .hero .where { color: var(--muted); margin: 0.25rem 0 2.5rem; }
+    .hero .where { color: var(--muted); margin: 0.25rem 0 2rem; }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.5rem, 2vw, 1.25rem);
+      margin: 0 0 2.5rem;
+      padding: 0;
+      list-style: none;
+    }
+    .countdown li { min-width: 1.75rem; }
+    .countdown .num {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown .label {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .countdown-done {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-style: italic;
+      color: var(--accent);
+      margin: 0 0 2.5rem;
+    }
 
     .hero .photo {
       width: 100%;
@@ -123,6 +155,12 @@
     <h1>Jamie <span class="amp">&amp;</span> Brian</h1>
     <p class="when">Saturday, October 16, 2027</p>
     <p class="where">New York City, New York</p>
+    <ul class="countdown" id="countdown" role="timer" aria-label="Countdown to the wedding">
+      <li><span class="num" data-unit="days">--</span><span class="label">Days</span></li>
+      <li><span class="num" data-unit="hours">--</span><span class="label">Hours</span></li>
+      <li><span class="num" data-unit="minutes">--</span><span class="label">Minutes</span></li>
+      <li><span class="num" data-unit="seconds">--</span><span class="label">Seconds</span></li>
+    </ul>
     <figure class="photo">
       <img src="couple.jpg" alt="Jamie and Brian sitting together on a park bench" width="798" height="600">
     </figure>
@@ -164,6 +202,34 @@
   </footer>
 
   <script>
+    // Countdown to the ceremony: October 16, 2027 at 4:00 PM New York time.
+    (function () {
+      var target = new Date('2027-10-16T16:00:00-04:00').getTime();
+      var box = document.getElementById('countdown');
+      var cells = {};
+      box.querySelectorAll('[data-unit]').forEach(function (el) { cells[el.dataset.unit] = el; });
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+
+      function tick() {
+        var diff = target - Date.now();
+        if (diff <= 0) {
+          var done = document.createElement('p');
+          done.className = 'countdown-done';
+          done.textContent = 'Today\u2019s the day!';
+          box.replaceWith(done);
+          clearInterval(timer);
+          return;
+        }
+        var s = Math.floor(diff / 1000);
+        cells.days.textContent = Math.floor(s / 86400);
+        cells.hours.textContent = pad(Math.floor(s % 86400 / 3600));
+        cells.minutes.textContent = pad(Math.floor(s % 3600 / 60));
+        cells.seconds.textContent = pad(s % 60);
+      }
+      var timer = setInterval(tick, 1000);
+      tick();
+    })();
+
     // Always open at the top: ignore any #section left in the URL and the browser's saved scroll position.
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.addEventListener('load', function () {
