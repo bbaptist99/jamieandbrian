@@ -56,6 +56,19 @@
     }
     .hero .where { color: var(--muted); margin: 0.25rem 0 2.5rem; }
 
+    .hero .photo {
+      width: 100%;
+      max-width: 50rem;
+      margin: 0 0 2.5rem;
+    }
+    .hero .photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(31, 42, 38, 0.08), 0 12px 32px rgba(31, 42, 38, 0.12);
+    }
+
     .button {
       display: inline-block;
       background: var(--accent);
@@ -110,6 +123,9 @@
     <h1>Jamie <span class="amp">&amp;</span> Brian</h1>
     <p class="when">Saturday, October 16, 2027</p>
     <p class="where">New York City, New York</p>
+    <figure class="photo">
+      <img src="couple.jpg" alt="Jamie and Brian sitting together on a park bench" width="798" height="600">
+    </figure>
     <a class="button" href="#rsvp">RSVP</a>
   </header>
 
