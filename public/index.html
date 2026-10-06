@@ -147,5 +147,24 @@
     <p>Jamie &amp; Brian &middot; October 16, 2027</p>
   </footer>
 
+  <script>
+    // Always open at the top: ignore any #section left in the URL and the browser's saved scroll position.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('load', function () {
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+      window.scrollTo(0, 0);
+    });
+
+    // In-page buttons scroll to their section without adding #rsvp to the address bar.
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
 </body>
 </html>
