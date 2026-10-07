@@ -38,6 +38,59 @@
       text-align: center;
       padding: 3rem 1.5rem 4rem;
     }
+    .banner {
+      position: relative;
+      height: clamp(18rem, 62vh, 40rem);
+      overflow: hidden;
+      background: var(--line);
+    }
+    .banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .banner img.is-active { opacity: 1; }
+    .banner-controls {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .banner-dot {
+      width: 0.6rem;
+      height: 0.6rem;
+      padding: 0;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+    }
+    .banner-dot[aria-current="true"] { background: #fff; }
+    .banner-pause {
+      margin-left: 0.5rem;
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+      border: 0;
+      border-radius: 2px;
+      font: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+    }
+    .banner-dot:focus-visible, .banner-pause:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
     .site-title {
       font-family: var(--serif);
       font-weight: 400;
@@ -178,7 +231,21 @@
 </head>
 <body>
 
-  <header class="hero" id="top">
+  <section class="banner" id="top" aria-roledescription="carousel" aria-label="Photos of Jamie and Brian">
+    <img class="is-active" src="holding_hands.jpg" alt="Jamie and Brian holding hands">
+    <img src="stairs.jpg" alt="Jamie and Brian on a set of stairs">
+    <img src="standing_fence.jpg" alt="Jamie and Brian standing by a fence">
+    <img src="water_kiss.jpg" alt="Jamie and Brian kissing by the water">
+    <div class="banner-controls">
+      <button class="banner-dot" type="button" aria-label="Show photo 1" aria-current="true"></button>
+      <button class="banner-dot" type="button" aria-label="Show photo 2"></button>
+      <button class="banner-dot" type="button" aria-label="Show photo 3"></button>
+      <button class="banner-dot" type="button" aria-label="Show photo 4"></button>
+      <button class="banner-pause" type="button">Pause</button>
+    </div>
+  </section>
+
+  <header class="hero">
     <p class="site-title">Jamie <span class="amp">&amp;</span> Brian</p>
     <nav class="site-nav" aria-label="Wedding website">
       <ul>
@@ -278,6 +345,41 @@
   </footer>
 
   <script>
+    // Banner carousel: crossfades every 5 seconds; dots jump to a photo; Pause stops it.
+    (function () {
+      var banner = document.querySelector('.banner');
+      var slides = banner.querySelectorAll('img');
+      var dots = banner.querySelectorAll('.banner-dot');
+      var pauseBtn = banner.querySelector('.banner-pause');
+      var current = 0, timer = null;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function show(i) {
+        slides[current].classList.remove('is-active');
+        dots[current].removeAttribute('aria-current');
+        current = (i + slides.length) % slides.length;
+        slides[current].classList.add('is-active');
+        dots[current].setAttribute('aria-current', 'true');
+      }
+      function play() {
+        stop();
+        timer = setInterval(function () { show(current + 1); }, 5000);
+        pauseBtn.textContent = 'Pause';
+      }
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+        pauseBtn.textContent = 'Play';
+      }
+
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { show(i); if (timer) play(); });
+      });
+      pauseBtn.addEventListener('click', function () { timer ? stop() : play(); });
+
+      if (reduceMotion) stop(); else play();
+    })();
+
     // Countdown to the ceremony: October 16, 2027 at 4:00 PM New York time.
     (function () {
       var target = new Date('2027-10-16T16:00:00-04:00').getTime();
