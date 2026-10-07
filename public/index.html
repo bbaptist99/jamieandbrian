@@ -38,40 +38,47 @@
       text-align: center;
       padding: 3rem 1.5rem 4rem;
     }
-    /* Photos are tall (2:3). Phones: the photo fills the banner.
-       Wider screens: the whole photo shows, centered, over a blurred copy of itself. */
-    .banner {
+    /* Framed photo carousel. Every photo shows in full; any leftover space
+       in the frame is filled with a soft, blurred copy of the same photo. */
+    .carousel {
       position: relative;
-      height: min(88vh, 150vw);
+      width: 100%;
+      max-width: 36rem;
+      aspect-ratio: 4 / 5;
+      max-height: 85vh;
+      margin: 0 0 3rem;
       overflow: hidden;
+      border-radius: 2px;
       background: var(--line);
+      box-shadow: 0 1px 2px rgba(95, 80, 74, 0.08), 0 12px 32px rgba(95, 80, 74, 0.14);
     }
-    .banner .slide {
+    .carousel .slide {
       position: absolute;
       inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       transition: opacity 1.2s ease;
     }
-    .banner .slide.is-active { opacity: 1; }
-    .banner .backdrop {
+    .carousel .slide.is-active { opacity: 1; }
+    .carousel .backdrop {
       position: absolute;
       inset: -40px;
       width: calc(100% + 80px);
       height: calc(100% + 80px);
       object-fit: cover;
-      filter: blur(28px) saturate(0.9) brightness(0.92);
+      filter: blur(24px) saturate(0.9) brightness(0.95);
     }
-    .banner .photo-full {
+    .carousel .photo-full {
       position: relative;
       display: block;
-      height: 100%;
-      width: auto;
       max-width: 100%;
-      margin: 0 auto;
-      object-fit: contain;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.18);
+      max-height: 100%;
+      width: auto;
+      height: auto;
     }
-    .banner-controls {
+    .carousel-controls {
       position: absolute;
       left: 0;
       right: 0;
@@ -81,7 +88,7 @@
       align-items: center;
       gap: 0.6rem;
     }
-    .banner-dot {
+    .carousel-dot {
       width: 0.6rem;
       height: 0.6rem;
       padding: 0;
@@ -91,8 +98,8 @@
       cursor: pointer;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
     }
-    .banner-dot[aria-current="true"] { background: #fff; }
-    .banner-pause {
+    .carousel-dot[aria-current="true"] { background: #fff; }
+    .carousel-pause {
       margin-left: 0.5rem;
       background: rgba(0, 0, 0, 0.25);
       color: #fff;
@@ -105,7 +112,7 @@
       padding: 0.2rem 0.5rem;
       cursor: pointer;
     }
-    .banner-dot:focus-visible, .banner-pause:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .carousel-dot:focus-visible, .carousel-pause:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
     .site-title {
       font-family: var(--serif);
@@ -183,18 +190,6 @@
       margin: 0 0 2.5rem;
     }
 
-    .hero .photo {
-      width: 100%;
-      max-width: 50rem;
-      margin: 0 0 3rem;
-    }
-    .hero .photo img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 2px;
-      box-shadow: 0 1px 2px rgba(95, 80, 74, 0.08), 0 12px 32px rgba(95, 80, 74, 0.14);
-    }
 
     .button {
       display: inline-block;
@@ -247,33 +242,7 @@
 </head>
 <body>
 
-  <section class="banner" id="top" aria-roledescription="carousel" aria-label="Photos of Jamie and Brian">
-    <div class="slide is-active">
-      <img class="backdrop" src="holding_hands.JPG" alt="" aria-hidden="true">
-      <img class="photo-full" src="holding_hands.JPG" alt="Jamie and Brian holding hands" width="1536" height="2304">
-    </div>
-    <div class="slide">
-      <img class="backdrop" src="stairs.JPG" alt="" aria-hidden="true">
-      <img class="photo-full" src="stairs.JPG" alt="Jamie and Brian on a set of stairs" width="1536" height="2304">
-    </div>
-    <div class="slide">
-      <img class="backdrop" src="standing_fence.JPG" alt="" aria-hidden="true">
-      <img class="photo-full" src="standing_fence.JPG" alt="Jamie and Brian standing by a fence" width="1536" height="2304">
-    </div>
-    <div class="slide">
-      <img class="backdrop" src="water_kiss.JPG" alt="" aria-hidden="true">
-      <img class="photo-full" src="water_kiss.JPG" alt="Jamie and Brian kissing by the water" width="1536" height="2304">
-    </div>
-    <div class="banner-controls">
-      <button class="banner-dot" type="button" aria-label="Show photo 1" aria-current="true"></button>
-      <button class="banner-dot" type="button" aria-label="Show photo 2"></button>
-      <button class="banner-dot" type="button" aria-label="Show photo 3"></button>
-      <button class="banner-dot" type="button" aria-label="Show photo 4"></button>
-      <button class="banner-pause" type="button">Pause</button>
-    </div>
-  </section>
-
-  <header class="hero">
+  <header class="hero" id="top">
     <p class="site-title">Jamie <span class="amp">&amp;</span> Brian</p>
     <nav class="site-nav" aria-label="Wedding website">
       <ul>
@@ -287,9 +256,36 @@
       </ul>
     </nav>
 
-    <figure class="photo">
-      <img src="couple.jpg" alt="Jamie and Brian sitting together on a park bench" width="798" height="600">
-    </figure>
+    <section class="carousel" aria-roledescription="carousel" aria-label="Photos of Jamie and Brian">
+      <div class="slide is-active">
+        <img class="backdrop" src="couple.jpg" alt="" aria-hidden="true">
+        <img class="photo-full" src="couple.jpg" alt="Jamie and Brian sitting together on a park bench" width="798" height="600">
+      </div>
+      <div class="slide">
+        <img class="backdrop" src="holding_hands.JPG" alt="" aria-hidden="true">
+        <img class="photo-full" src="holding_hands.JPG" alt="Jamie and Brian holding hands" width="1536" height="2304">
+      </div>
+      <div class="slide">
+        <img class="backdrop" src="stairs.JPG" alt="" aria-hidden="true">
+        <img class="photo-full" src="stairs.JPG" alt="Jamie and Brian on a set of stairs" width="1536" height="2304">
+      </div>
+      <div class="slide">
+        <img class="backdrop" src="standing_fence.JPG" alt="" aria-hidden="true">
+        <img class="photo-full" src="standing_fence.JPG" alt="Jamie and Brian standing by a fence" width="1536" height="2304">
+      </div>
+      <div class="slide">
+        <img class="backdrop" src="water_kiss.JPG" alt="" aria-hidden="true">
+        <img class="photo-full" src="water_kiss.JPG" alt="Jamie and Brian kissing by the water" width="1536" height="2304">
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-dot" type="button" aria-label="Show photo 1" aria-current="true"></button>
+        <button class="carousel-dot" type="button" aria-label="Show photo 2"></button>
+        <button class="carousel-dot" type="button" aria-label="Show photo 3"></button>
+        <button class="carousel-dot" type="button" aria-label="Show photo 4"></button>
+        <button class="carousel-dot" type="button" aria-label="Show photo 5"></button>
+        <button class="carousel-pause" type="button">Pause</button>
+      </div>
+    </section>
 
     <h1><span class="name">Jamie Lander</span> <span class="amp">&amp;</span> <span class="name">Brian Baptist</span></h1>
     <p class="when">Saturday, October 16, 2027</p>
@@ -373,12 +369,12 @@
   </footer>
 
   <script>
-    // Banner carousel: crossfades every 5 seconds; dots jump to a photo; Pause stops it.
+    // Photo carousel: crossfades every 5 seconds; dots jump to a photo; Pause stops it.
     (function () {
-      var banner = document.querySelector('.banner');
-      var slides = banner.querySelectorAll('.slide');
-      var dots = banner.querySelectorAll('.banner-dot');
-      var pauseBtn = banner.querySelector('.banner-pause');
+      var carousel = document.querySelector('.carousel');
+      var slides = carousel.querySelectorAll('.slide');
+      var dots = carousel.querySelectorAll('.carousel-dot');
+      var pauseBtn = carousel.querySelector('.carousel-pause');
       var current = 0, timer = null;
       var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
