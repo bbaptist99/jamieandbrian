@@ -27,6 +27,21 @@
 /* Fade artwork beneath the wedding names. */
 .home .banner-art{opacity:.38}
 .home .hero{background-color:#f7f0e4}
+
+/* Names: first and last names in the same script at the same size,
+   one name on each side of the photo strip on every screen size. */
+.couple-title{position:absolute;inset:0;display:grid;grid-template-columns:1fr 260px 1fr;align-items:center;gap:0;margin:0}
+.person{min-width:0}
+.script-name,.surname{font:400 clamp(56px,6.2vw,88px)/1.05 var(--script);letter-spacing:0;text-transform:none;white-space:nowrap;padding:0 8px;margin:0}
+@media(max-width:700px){
+  .hero-composition{display:flex;min-height:480px;padding-top:0}
+  .couple-title{position:absolute;inset:0;display:grid;grid-template-columns:1fr 140px 1fr;align-items:center;gap:0}
+  .script-name,.surname{font-size:clamp(24px,7.8vw,36px);padding:0 2px}
+  .film-strip{width:130px;padding:9px 9px 7px}
+  .film-frame{height:68px;margin-bottom:5px}
+  .film-strip figcaption{font-size:20px}
+  .frame-number{display:none}
+}
 </style>
 </head>
 <body class="home">
