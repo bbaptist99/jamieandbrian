@@ -22,18 +22,35 @@
     }
     header { text-align: center; padding: 30px 24px; border-bottom: 1px solid var(--line); }
     .site-title { font: 42px/1 var(--script); color: var(--ink); text-decoration: none; }
-    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 70px 24px; text-align: center; }
+    main { flex: 1; display: flex; justify-content: center; padding: 70px 24px; text-align: center; }
     .panel { width: 100%; max-width: 560px; }
     footer { text-align: center; border-top: 1px solid var(--line); padding: 30px 24px; color: var(--muted); font-size: 12px; letter-spacing: .09em; }
+    .story { text-align: left; max-width: 680px; }
+    .story section { padding: 0 0 44px; margin: 0 0 44px; border-bottom: 1px solid var(--line); }
+    .story h2 { font: 500 clamp(34px, 5vw, 46px)/1.1 var(--serif); color: var(--ink); text-align: center; margin: 0 0 22px; }
+    .story p { margin: 0 0 18px; }
+    .story section p:last-child { margin-bottom: 0; }
+    .story .closing { font: italic clamp(22px, 3vw, 27px)/1.4 var(--serif); color: var(--muted); text-align: center; margin: 0; }
   </style>
 </head>
 <body>
   <header><a class="site-title" href="/">Jamie &amp; Brian</a></header>
 
   <main>
-    <div class="panel">
-      <p class="lede">Night Before Information Coming Soon</p>
-    </div>
+    <article class="panel story">
+      <section>
+        <h2>Roce Ceremony</h2>
+        <p>The night before our wedding will be our version of a Roce ceremony. In traditional Mangalorean culture (the area of southern India where Brian&rsquo;s family is from), a day before the wedding, the bride and groom are blessed by friends &amp; family. This is sometimes done with coconut oil, symbolizing cleanliness and prosperity.</p>
+        <p>We will be having our own version of this ceremony, with a Roce-style party the night before. We invite you all to join, wear traditional Indian attire, and celebrate with us as we begin our lives as husband and wife.</p>
+      </section>
+
+      <section>
+        <h2>Wedding Day</h2>
+        <p>The wedding day will feature a Jewish-style ceremony in honor of Jamie&rsquo;s family. We will stand beneath a chuppah, which represents the physical and spiritual home we will build together. There will also be a blessing of the challah in honor of Jamie&rsquo;s grandfather.</p>
+      </section>
+
+      <p class="closing">Together these combine our respective heritage and cultures, while representing our life together in New York City.</p>
+    </article>
   </main>
 
   <footer>Jamie &amp; Brian &middot; October 16, 2027</footer>
