@@ -47,6 +47,14 @@
 .home .details.info dd .getting-there{margin:0 0 12px;max-width:none}
 .home .details.info dd .getting-there:last-child{margin-bottom:0}
 .getting-there strong{font-weight:500;color:var(--ink)}
+.faq-list{max-width:640px;margin:0 auto;text-align:left;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 2px;font:400 24px/1.3 var(--serif);color:var(--ink)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";font:300 26px/1 var(--sans);color:var(--accent);flex:none}
+.faq-item[open] summary::after{content:"\2212"}
+.faq-item summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.home .details .faq-item p{max-width:none;margin:0 2px 20px;text-align:left}
 </style>
 </head>
 <body class="home">
@@ -89,7 +97,7 @@
     <section class="details info" id="schedule">
       <h2>Schedule &amp; Attire</h2>
       <dl>
-        <div class="row"><dt>Ceremony</dt><dd>5:30 PM<br>Ravel Hotel<br>8-08 Queens Plaza S, Long Island City, NY 11101<br><em>Reception to Follow</em></dd></div>
+        <div class="row"><dt>Ceremony</dt><dd>5:30 PM<br>Ravel Hotel Rooftop<br>8-08 Queens Plaza S, Long Island City, NY 11101<br><em>Reception to Follow</em></dd></div>
         <div class="row"><dt>Attire</dt><dd>Black Tie Optional</dd></div>
       </dl>
     </section>
@@ -116,6 +124,20 @@
     <section class="details" id="things-to-do">
       <h2>Things to Do</h2>
       <p>Our favorite spots around New York, coming soon.</p>
+    </section>
+
+    <section class="details" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Venue Expectations</summary>
+          <p>The ceremony will be outdoors (weather permitting), so please bring layers if you think you will be cold!</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are children allowed?</summary>
+          <p>Our wedding will be adults only. We appreciate your understanding!</p>
+        </details>
+      </div>
     </section>
 
     <section class="details" id="rsvp">
