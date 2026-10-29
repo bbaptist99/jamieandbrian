@@ -55,6 +55,21 @@
 .faq-item[open] summary::after{content:"\2212"}
 .faq-item summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .home .details .faq-item p{max-width:none;margin:0 2px 20px;text-align:left}
+.home .details.info dd.stay p{max-width:none;margin:0 0 14px;text-align:left}
+.home .details.info dd.stay p:last-child{margin-bottom:0}
+.stay strong{font-weight:500;color:var(--ink)}
+.group-code{font-family:var(--sans);font-weight:500;letter-spacing:.08em;color:var(--ink);background:#efe3d3;padding:2px 8px}
+.home .details.info dd.stay .stay-links{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 20px}
+.stay-button{display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px;background:var(--accent);color:#fff6e5;text-decoration:none;padding:12px 18px;font:500 12px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.stay-button span{font-size:11px;letter-spacing:.04em;text-transform:none;opacity:.85;font-weight:400}
+.stay-button:hover{background:#51252d}
+.stay-button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media(min-width:701px){.home .details.info .row{grid-template-columns:190px 1fr;column-gap:28px}}
+.nowrap{white-space:nowrap}
+.home .details.info dd.stay .hotel{border:1px solid var(--line);background:rgba(255,250,242,.55);padding:22px 22px 20px;margin:18px 0 0}
+.home .details.info dd.stay .hotel+.hotel{margin-top:14px}
+.stay .hotel h3{font:500 28px/1.15 var(--serif);color:var(--ink);margin:0 0 12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.stay .hotel-tag{font:500 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);padding:5px 8px}
 </style>
 </head>
 <body class="home">
@@ -106,7 +121,21 @@
       <h2>Travel</h2>
       <dl>
         <div class="row"><dt>Venue</dt><dd>Ravel Hotel<br>8-08 Queens Plaza S, Long Island City, NY 11101</dd></div>
-        <div class="row"><dt>Accommodations</dt><dd>Ravel Hotel Block</dd></div>
+        <div class="row"><dt>Accommodations</dt><dd class="stay">
+          <p>We have reserved discounted room blocks for our guests. Details for each hotel are below.</p>
+
+          <div class="hotel">
+            <h3>Ravel Hotel <span class="hotel-tag">Wedding venue</span></h3>
+            <p>Our wedding celebration will take place at the Ravel Hotel, and we have reserved both 1 and 2 night room blocks for those interested in staying at the venue!</p>
+            <p>Guests can access the discount online by entering the code below or by clicking one of the links below.</p>
+            <p><strong>Go to:</strong> <a href="https://www.ravelhotel.com" target="_blank" rel="noopener">www.ravelhotel.com</a><br><strong>Group code:</strong> <span class="group-code">101627LAN</span></p>
+            <p class="stay-links"><a class="stay-button" href="https://www.wyndhamhotels.com/trademark/long-island-city-new-york/ravel-hotel-trademark-collection-by-wyndham/rooms-rates?&amp;checkInDate=10/16/2027&amp;checkOutDate=10/17/2027&amp;groupCode=101627LAN" target="_blank" rel="noopener">1 night room block<span>Oct 16&ndash;17, 2027</span></a><a class="stay-button" href="https://www.wyndhamhotels.com/trademark/long-island-city-new-york/ravel-hotel-trademark-collection-by-wyndham/rooms-rates?&amp;checkInDate=10/15/2027&amp;checkOutDate=10/17/2027&amp;groupCode=101627LAN" target="_blank" rel="noopener">2 night room block<span>Oct 15&ndash;17, 2027</span></a></p>
+            <p>Please contact the hotel staff at <a href="mailto:Julissa.e@ravelmgmt.com">Julissa.e@ravelmgmt.com</a> or <a class="nowrap" href="tel:+17182896111">(718) 289-6111</a> with any questions.</p>
+          </div>
+
+          <!-- To add another hotel, copy everything from <div class="hotel"> to its closing </div>,
+               paste it here, and change the name, text, code, links and contact. -->
+        </dd></div>
         <div class="row"><dt>Getting there</dt><dd><p class="getting-there"><strong>NYC airports:</strong> Laguardia (LGA), John F. Kennedy (JFK) and Newark (EWR). Laguardia is closest to the venue, serviced by taxis, ubers, and subways.</p><p class="getting-there"><strong>Subway stations:</strong> Nearby subway stations to the venue include Queensboro Plaza (7, N, W trains) and Court Square (E, M trains).</p><p class="getting-there"><strong>Parking:</strong> The venue will feature complimentary valet parking. There is also limited street parking available in the surrounding area.</p></dd></div>
       </dl>
     </section>
