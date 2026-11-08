@@ -87,15 +87,16 @@ html,body{overflow-x:clip}
   .section-art .art-left{right:calc(50% + 330px)}
   .section-art .art-right{left:calc(50% + 330px)}
 }
+.art-mobile{display:none}
 @media(max-width:700px){
-  /* On phones the art sits behind the text, so it stays faint to keep the text readable. */
-  .section-art img{height:62%;bottom:4%}
-  .section-art .art-left{right:auto;left:-26px}
-  .section-art .art-right{left:auto;right:-70px}
-  .has-art.in-view .section-art .art-left{opacity:.14}
-  .has-art.in-view .section-art .art-right{opacity:.35}
+  /* On phones: no side art; the original illustration sits small below the Attire text. */
+  .section-art{display:none}
+  .art-mobile{display:block;width:150px;height:auto;margin:34px auto 0;border-radius:4px;
+    opacity:0;filter:blur(10px);transform:translateY(12px);
+    transition:opacity 1.2s ease,filter 1.6s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+  .has-art.in-view .art-mobile{opacity:1;filter:blur(0);transform:none}
 }
-@media(prefers-reduced-motion:reduce){.section-art img{transform:none!important;filter:none!important;transition:opacity .4s ease}}
+@media(prefers-reduced-motion:reduce){.art-mobile{transform:none!important;filter:none!important}.section-art img{transform:none!important;filter:none!important;transition:opacity .4s ease}}
 </style>
 </head>
 <body class="home">
@@ -145,6 +146,7 @@ html,body{overflow-x:clip}
         <div class="row"><dt>Ceremony</dt><dd>5:30 PM<br>Ravel Hotel Rooftop<br>8-08 Queens Plaza S, Long Island City, NY 11101<br><em>Reception to Follow</em></dd></div>
         <div class="row"><dt>Attire</dt><dd>Black Tie Optional</dd></div>
       </dl>
+      <img class="art-mobile" src="dreamstime_xxl_138363906.jpg" alt="" aria-hidden="true" width="2576" height="2576" loading="lazy">
     </section>
 
     <section class="details info" id="travel">
