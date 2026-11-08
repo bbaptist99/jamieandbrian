@@ -71,21 +71,31 @@
 .stay .hotel h3{font:500 28px/1.15 var(--serif);color:var(--ink);margin:0 0 12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .stay .hotel-tag{font:500 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);padding:5px 8px}
 
-/* Section background images: faint artwork that fades in as a section scrolls
-   into view and fades out as it leaves. To use on another section, add the class
-   "has-bg" and style="--section-bg:url('your-image.jpg')" to that <section>. */
-.has-bg{position:relative;isolation:isolate;overflow:hidden}
-.has-bg::before{
-  content:"";position:absolute;top:0;bottom:0;left:50%;height:100%;aspect-ratio:1/1;z-index:-1;pointer-events:none;
-  background:var(--section-bg) center/cover no-repeat;
-  -webkit-mask-image:radial-gradient(circle closest-side,#000 50%,transparent 100%);
-          mask-image:radial-gradient(circle closest-side,#000 50%,transparent 100%);
-  opacity:0;transform:translateX(-50%) scale(1.04);
-  transition:opacity 1.4s ease,transform 1.8s ease;
+/* Section side artwork: images sit on either side of the text and fade/slide in
+   as the section scrolls into view, then fade out as it leaves. */
+html,body{overflow-x:clip}
+.has-art{position:relative;isolation:isolate}
+.section-art{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.section-art img{position:absolute;bottom:6%;height:86%;width:auto;max-width:none;
+  opacity:0;filter:blur(14px);
+  transition:opacity 1.2s ease,filter 1.6s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.section-art .art-left{right:calc(50% + 335px);transform:translateX(-30px)}
+.section-art .art-right{left:calc(50% + 335px);transform:translateX(30px);transition-delay:.15s}
+.has-art.in-view .section-art img{opacity:1;filter:blur(0);transform:none}
+@media(max-width:1100px){
+  .section-art img{height:62%;bottom:14%}
+  .section-art .art-left{right:calc(50% + 330px)}
+  .section-art .art-right{left:calc(50% + 330px)}
 }
-.has-bg.in-view::before{opacity:.22;transform:translateX(-50%) scale(1)}
-@media(max-width:700px){.has-bg.in-view::before{opacity:.15}}
-@media(prefers-reduced-motion:reduce){.has-bg::before{transition:opacity .4s ease;transform:translateX(-50%)}.has-bg.in-view::before{transform:translateX(-50%)}}
+@media(max-width:700px){
+  /* On phones the art sits behind the text, so it stays faint to keep the text readable. */
+  .section-art img{height:62%;bottom:4%}
+  .section-art .art-left{right:auto;left:-26px}
+  .section-art .art-right{left:auto;right:-70px}
+  .has-art.in-view .section-art .art-left{opacity:.14}
+  .has-art.in-view .section-art .art-right{opacity:.35}
+}
+@media(prefers-reduced-motion:reduce){.section-art img{transform:none!important;filter:none!important;transition:opacity .4s ease}}
 </style>
 </head>
 <body class="home">
@@ -125,7 +135,11 @@
       <div class="weekend-photo"><img src="couple.jpg" alt="Jamie and Brian sitting together on a park bench" loading="lazy" width="798" height="600"></div>
       <div class="weekend-copy"><p class="eyebrow">October 16, 2027</p><p class="venue-name">The Ravel Hotel</p><p>Long Island City, New York</p><a class="text-link" href="#travel">Plan your visit</a></div>
     </section>
-    <section class="details info has-bg" id="schedule" style="--section-bg:url('dreamstime_xxl_138363906.jpg')">
+    <section class="details info has-art" id="schedule">
+      <div class="section-art" aria-hidden="true">
+        <img class="art-left" src="attire-suit.png" alt="" width="356" height="900" loading="lazy">
+        <img class="art-right" src="attire-dress.png" alt="" width="594" height="900" loading="lazy">
+      </div>
       <h2>Schedule &amp; Attire</h2>
       <dl>
         <div class="row"><dt>Ceremony</dt><dd>5:30 PM<br>Ravel Hotel Rooftop<br>8-08 Queens Plaza S, Long Island City, NY 11101<br><em>Reception to Follow</em></dd></div>
@@ -218,9 +232,9 @@
     });
 
   
-    // Fade section background images in and out as each section scrolls through view.
+    // Fade section artwork in and out as each section scrolls through view.
     (function () {
-      var sections = document.querySelectorAll('.has-bg');
+      var sections = document.querySelectorAll('.has-art');
       if (!('IntersectionObserver' in window)) {
         sections.forEach(function (el) { el.classList.add('in-view'); });
         return;
